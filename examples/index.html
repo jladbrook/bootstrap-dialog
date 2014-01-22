@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap Dialog - Make use of Twitter Bootstrap's modal more monkey-friendly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="prettify/css/prettify.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="bootstrap/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="bootstrap/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="bootstrap/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="bootstrap/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="bootstrap/ico/favicon.png">
+								  
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="../js/bootstrap-dialog.js"></script>
+	<script src="prettify/js/prettify.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		// make code pretty
+		window.prettyPrint && prettyPrint()
+	});
+	</script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Bootstrap Dialog</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+			  <li><a href="https://github.com/nakupanda/bootstrap-dialog" target="_blank">The Project</a></li>
+              <li><a href="#simple-examples">Simple Examples</a></li>
+              <li><a href="#fancy-examples">Fancy Examples</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    
+<div class="page-header">
+	<h1>Moved to Bootstrap 3!</h1>
+	<p>
+		See <a href="https://github.com/nakupanda/bootstrap3-dialog"><strong>BootstrapDialog for Bootstrap 3</strong><a>.
+	</p>
+</div>
+    
+<div class="page-header">
+	<h1>If you can help</h1>
+	<p>
+		The code of this javascript component is ok, but the documentation is not.
+		If you're interested in this project, please contact me.
+	</p>
+</div>
+
+
+<!-- Examples block 1 -->
+<div class="page-header">
+	<a name="simple-examples"></a>
+	<h1>Examples for lazy monkeys</h1>
+</div>
+
+<!-- Alert -->
+<h3>Alert</h3>
+<p>
+<pre class="prettyprint linenums">
+BootstrapDialog.alert('Hi Apple!');
+</pre>
+<button class="btn btn-primary" id="btn-alert">Run</button>
+</p>
+
+<h3>Alert with callback</h3>
+<p>
+<pre class="prettyprint linenums">
+BootstrapDialog.alert('Hi Apple!', function(){
+	BootstrapDialog.alert('Stop it, Orange!');
+});
+</pre>
+<button class="btn btn-primary" id="btn-alert-callback">Run</button>
+</p>
+
+<!-- Confirm -->
+<h3>Confirm</h3>
+<p>
+<pre class="prettyprint linenums">
+BootstrapDialog.confirm('Hi Apple, are you sure?');
+</pre>
+<button class="btn btn-primary" id="btn-confirm">Run</button>
+</p>
+
+<h3>Confirm with callback</h3>
+<p>
+<pre class="prettyprint linenums">
+BootstrapDialog.confirm('Hi Apple, are you sure?', function(result){
+	alert('Hi Orange, my anwser is: ' + result);
+});
+</pre>
+<button class="btn btn-primary" id="btn-confirm-callback">Run</button>
+</p>
+
+<script type="text/javascript">
+$(function(){
+	$('#btn-alert').click(function(){
+		BootstrapDialog.alert('Hi Apple!');
+	});
+	$('#btn-alert-callback').click(function(){
+		BootstrapDialog.alert('Hi Apple!', function(){
+			alert('Stop it, Orange!');
+		});
+	});
+	
+	$('#btn-confirm').click(function(){
+		BootstrapDialog.confirm('Hi Apple, are you sure?');
+	});
+	$('#btn-confirm-callback').click(function(){
+		BootstrapDialog.confirm('Hi Apple, are you sure?', function(result){
+			alert('Hi Orange, my anwser is: ' + result);
+		});
+	});
+});
+</script>
+
+<!-- Examples block 2 -->
+<div class="page-header">
+	<h1>Examples for studious monkeys</h1>
+</div>
+
+<h3>Construct a dialog</h3>
+<p>
+<pre class="prettyprint linenums">
+var dialog = new BootstrapDialog({
+	title	:	'What do you think of Orange?',
+	content	:	'So, tell me please?',
+	buttons	:	[{
+		label	:	'I\'ve no idea.',
+		onclick	:	function(dialog){
+			dialog.close();
+		}
+	}, {
+		label	:	'He\'s a jerk!',
+		cssClass:	'btn-primary',
+		onclick	:	function(dialog){
+			alert('OK I will tell him.');
+			dialog.close();
+		}
+	}, {
+		label	:	'I like him.',
+		cssClass:	'btn-danger',
+		onclick	:	function(dialog){
+			alert('Ohhhh.. I can\'t believe that.');
+			dialog.close();
+		}
+	}]
+});
+dialog.open();
+</pre>
+<button class="btn btn-primary" id="btn-construct-dialog">Run</button>
+</p>
+
+<h3>Construct a dialog by using chained method callings</h3>
+<p>
+<pre class="prettyprint linenums">
+new BootstrapDialog().setTitle('What do you think of Orange?').setContent('So, tell me please?')
+.setButtons([{
+		label	:	'I\'ve no idea.',
+		onclick	:	function(dialog){
+			dialog.close();
+		}
+	}, {
+		label	:	'He\'s a jerk!',
+		cssClass:	'btn-primary',
+		onclick	:	function(dialog){
+			alert('OK I will tell him.');
+			dialog.close();
+		}
+	}, {
+		label	:	'I like him.',
+		cssClass:	'btn-danger',
+		onclick	:	function(dialog){
+			alert('Ohhhh.. I can\'t believe that.');
+			dialog.close();
+		}
+	}]).open();
+</pre>
+<button class="btn btn-primary" id="btn-construct-dialog-setter-chained">Run</button>
+</p>
+
+<h3>Use fancy content as title and content</h3>
+<p>
+<pre class="prettyprint linenums">
+var dialog = new BootstrapDialog({<br/>	title	:	$('&lt;select&gt;&lt;option&gt;please select...&lt;/option&gt;&lt;/select&gt;'),<br/>	content	:	$('&lt;select&gt;&lt;option&gt;please select...&lt;/option&gt;&lt;/select&gt;'),<br/>	buttons	:	[{<br/>		label	:	'OK',<br/>		onclick	:	function(dialog){<br/>			dialog.close();<br/>		}<br/>	}]<br/>});<br/>dialog.open();
+</pre>
+<button class="btn btn-primary" id="btn-fancy-title-content">Run</button>
+</p>
+
+<script type="text/javascript">
+$(function(){
+	$('#btn-construct-dialog').click(function(){
+		var dialog = new BootstrapDialog({
+			title	:	'What do you think of Orange?',
+			content	:	'So, tell me please?',
+			buttons	:	[{
+				label	:	'I\'ve no idea.',
+				onclick	:	function(dialog){
+					dialog.close();
+				}
+			}, {
+				label	:	'He\'s a jerk!',
+				cssClass:	'btn-primary',
+				onclick	:	function(dialog){
+					alert('OK I will tell him.');
+					dialog.close();
+				}
+			}, {
+				label	:	'I like him.',
+				cssClass:	'btn-danger',
+				onclick	:	function(dialog){
+					alert('Ohhhh.. I can\'t believe that.');
+					dialog.close();
+				}
+			}]
+		});
+		dialog.open();
+	});
+	$('#btn-construct-dialog-setter-chained').click(function(){
+		new BootstrapDialog().setTitle('What do you think of Orange?').setContent('So, tell me please?')
+		.setButtons([{
+				label	:	'I\'ve no idea.',
+				onclick	:	function(dialog){
+					dialog.close();
+				}
+			}, {
+				label	:	'He\'s a jerk!',
+				cssClass:	'btn-primary',
+				onclick	:	function(dialog){
+					alert('OK I will tell him.');
+					dialog.close();
+				}
+			}, {
+				label	:	'I like him.',
+				cssClass:	'btn-danger',
+				onclick	:	function(dialog){
+					alert('Ohhhh.. I can\'t believe that.');
+					dialog.close();
+				}
+			}]).open();
+	});
+	$('#btn-fancy-title-content').click(function(){
+		var dialog = new BootstrapDialog({
+			title	:	$('<select><option>please select...</option></select>'),
+			content	:	$('<select><option>please select...</option></select>'),
+			buttons	:	[{
+				label	:	'OK',
+				onclick	:	function(dialog){
+					dialog.close();
+				}
+			}]
+		});
+		dialog.open();
+	});
+});
+</script>
+
+<!-- Examples block 3 -->
+<div class="page-header">
+	<a name="fancy-examples"></a>
+	<h1>Ultimate example!</h1>
+	<p>
+		The example below shows how to create fancy contents in the dialog and manipulate the title, content, and buttons.
+	</p>
+</div>
+
+<h3>Question Dialog</h3>
+<p>
+<pre class="prettyprint linenums">
+var dialog = new BootstrapDialog();<br/>// Both of title and content accept plain text or jquery object, or if a function was provided a dialog instance will be passed to the function.  <br/>dialog.setTitle(function(dialog){<br/>	var $title = $('&lt;div&gt;&lt;/div&gt;');<br/>	$title.append('&lt;span&gt;Please anwser the questions.&lt;/span&gt;');<br/>	var $leaveNow = $('&lt;a href=&quot;#&quot;&gt;Leave now&lt;/a&gt;');<br/>	$leaveNow.click({dialog: dialog}, function(event){<br/>		// You can click the link in the title to close the dialog.<br/>		event.data.dialog.close();<br/>		event.preventDefault();<br/>	});<br/>	$title.append($leaveNow);<br/>	<br/>	return $title;<br/>});<br/>dialog.setContent(function(dialog){<br/>	var $content = $('&lt;div&gt;&lt;/div&gt;');<br/>	$content.append('&lt;p class=&quot;help-block&quot;&gt;I understand that the question may be difficult for you but please try to answer it anyway.&lt;/p&gt;');<br/>	$content.append('&lt;hr&gt;');<br/>	$content.append('&lt;label&gt;Question: 1 + 1 = ?&lt;/label&gt;');<br/>	$input = $('&lt;input type=&quot;text&quot;/&gt;');<br/>	$content.append($input);<br/>	$content.append('&lt;div class=&quot;hidden-block hide&quot;&gt;&lt;img src=&quot;http://www.ilex-press.com/wp-content/uploads/pig-thumb1.jpg&quot; width=&quot;200&quot; /&gt;&lt;br&gt;I can even answer this.&lt;/div&gt;');<br/>	$input.keyup({dialog: dialog}, function(event){<br/>		var dialog = event.data.dialog;<br/>		var value = $(this).val();<br/>		if(Number(value) == 2){<br/>			// Enable the button and let the piggy hide when the user provide a correct answer<br/>			dialog.getButton('btn-close').removeAttr('disabled');<br/>			dialog.getBody().find('.hidden-block').hide();<br/>			// Store data in dialog instance, then you can use if after the dialog is popped down.<br/>			dialog.setData('last-answer', value);<br/>		}else{<br/>			dialog.getButton('btn-close').attr('disabled', 'disabled');<br/>			dialog.getBody().find('.hidden-block').show();<br/>		}<br/>	});<br/>	<br/>	return $content;<br/>});<br/>dialog.setButtons([{<br/>	id		:		'btn-close',<br/>	label	:		'Enable this button only when you answered the question correctly.',<br/>	cssClass:		'btn-primary',<br/>	onclick	:		function(dialog){<br/>		// Demonstrate getting information of the dialog<br/>		alert('Good, you answered the question correctly!');<br/>		alert('The html of dialog header is: ' + dialog.getHeader().html());<br/>		alert('The html of dialog body is: ' + dialog.getBody().html());<br/>		alert('The html of dialog footer is: ' + dialog.getFooter().html());<br/>		alert('The value you stored in dialog is: ' + dialog.getData('last-answer'));<br/>		dialog.close();<br/>	}<br/>}]);<br/>dialog.setReady(function(dialog){<br/>	// Disable the button before the dialog is popped up<br/>	dialog.getButton('btn-close').attr('disabled', 'disabled');<br/>});<br/>dialog.open();<br/>
+</pre>
+<button class="btn btn-primary" id="btn-register-dialog">Run</button>
+</p>
+
+<script type="text/javascript">
+$(function(){
+	$('#btn-register-dialog').click(function(){
+		var dialog = new BootstrapDialog();
+		// Both of title and content accept plain text or jquery object, or if a function was provided a dialog instance will be passed to the function.  
+		dialog.setTitle(function(dialog){
+			var $title = $('<div></div>');
+			$title.append('<span>Please anwser the questions.</span>');
+			var $leaveNow = $('<a href="#">Leave now</a>');
+			$leaveNow.click({dialog: dialog}, function(event){
+				// You can click the link in the title to close the dialog.
+				event.data.dialog.close();
+				event.preventDefault();
+			});
+			$title.append($leaveNow);
+			
+			return $title;
+		});
+		dialog.setContent(function(dialog){
+			var $content = $('<div></div>');
+			$content.append('<p class="help-block">I understand that the question may be difficult for you but please try to answer it anyway.</p>');
+			$content.append('<hr>');
+			$content.append('<label>Question: 1 + 1 = ?</label>');
+			$input = $('<input type="text"/>');
+			$content.append($input);
+			$content.append('<div class="hidden-block hide"><img src="http://www.ilex-press.com/wp-content/uploads/pig-thumb1.jpg" width="200" /><br>I can even answer this.</div>');
+			$input.keyup({dialog: dialog}, function(event){
+				var dialog = event.data.dialog;
+				var value = $(this).val();
+				if(Number(value) == 2){
+					// Enable the button and let the piggy hide when the user provide a correct answer
+					dialog.getButton('btn-close').removeAttr('disabled');
+					dialog.getBody().find('.hidden-block').hide();
+					// Store data in dialog instance, then you can use if after the dialog is popped down.
+					dialog.setData('last-answer', value);
+				}else{
+					dialog.getButton('btn-close').attr('disabled', 'disabled');
+					dialog.getBody().find('.hidden-block').show();
+				}
+			});
+			
+			return $content;
+		});
+		dialog.setButtons([{
+			id		:		'btn-close',
+			label	:		'Enable this button only when you answered the question correctly.',
+			cssClass:		'btn-primary',
+			onclick	:		function(dialog){
+				// Demonstrate getting information of the dialog
+				alert('Good, you answered the question correctly!');
+				alert('The html of dialog header is: ' + dialog.getHeader().html());
+				alert('The html of dialog body is: ' + dialog.getBody().html());
+				alert('The html of dialog footer is: ' + dialog.getFooter().html());
+				alert('The value you stored in dialog is: ' + dialog.getData('last-answer'));
+				dialog.close();
+			}
+		}]);
+		dialog.setReady(function(dialog){
+			// Disable the button before the dialog is popped up
+			dialog.getButton('btn-close').attr('disabled', 'disabled');
+		});
+		dialog.open();
+	});
+});
+</script>
+
+    </div> <!-- /container -->
+  </body>
+</html>
